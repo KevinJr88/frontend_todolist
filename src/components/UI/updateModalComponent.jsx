@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import {
-    Typography,
-    Checkbox,
     Dialog,
     DialogHeader,
     DialogBody,
@@ -33,7 +31,6 @@ export const ModalUpdate = ({ defaultData, open, handleOpen, onDissmiss}) => {
                         value={task}
                         onChange={handleTaskChange}
                     />
-
                     <label htmlFor="" className=" font-semibold text-black">Note</label>
                     <input
                         type="text"
@@ -59,6 +56,4 @@ export const ModalUpdate = ({ defaultData, open, handleOpen, onDissmiss}) => {
             </Dialog>
         </div>
     );
-
-
 }
