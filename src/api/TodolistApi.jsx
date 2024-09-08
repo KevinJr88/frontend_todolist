@@ -1,14 +1,15 @@
 import useAxios from ".";
 
-export const GetAll = async () => {
+export const GetAll = async (offset) => {
     try {
-        const response = await useAxios.get("/todolist", {
+        console.log(offset);
+        const response = await useAxios.get(`/todolist/${offset-1}/4`, {
             headers: {
                 "Content-Type": "application/json",
             },
         });
-        console.log(response.data.data);
-        return response.data.data;
+        console.log(response.data.response.content);
+        return response.data.response.content;
     } catch (error) {
         throw error.response.data.data;
     }
@@ -88,20 +89,52 @@ export const SearchTodolist = async (data) => {
     }
 };
 
-export const FilterStatusTodolist = async (data) => {
+export const FilterStatusTodolist = async (status, offset) => {
     try {
-        console.log(data);
-        const response = await useAxios.post("/todolist/filter", data, {
+        console.log("Masuk sini")
+        console.log(status);
+        console.log(offset);
+        const response = await useAxios.get(`/todolist/${status}/${offset-1}/4`, {
             headers: {
                 "Content-Type": "application/json",
             },
         });
-        
-        return response.data.data;
+        console.log(response.data.response.content);
+        return response.data.response.content;
     } catch (error) {
-        throw error.response.data;
+        throw error.response.data.response.content;
     }
 };
+
+export const GetCountByStatus = async (status) => {
+    try {
+        const response = await useAxios.get(`/todolist/count/${status}`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        console.log(response.data.data);
+        return response.data.data;
+    } catch (error) {
+        throw error.response.data.data;
+    }
+};
+
+export const GetCountTodolist = async () => {
+    try {
+        const response = await useAxios.get(`/todolist/count`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        console.log(response.data.data);
+        return response.data.data;
+    } catch (error) {
+        throw error.response.data.data;
+    }
+};
+
+
 
 
 

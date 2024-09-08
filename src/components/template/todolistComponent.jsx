@@ -6,6 +6,9 @@ import {
     DeleteTodolistById,
     GetTodolistById,
     CreateTodolist,
+    SearchTodolist,
+    GetCountByStatus,
+    GetCountTodolist
 } from "../../api/TodolistApi";
 
 import {
@@ -17,7 +20,10 @@ import { ModalCreate } from "../UI/createModalComponent";
 import { ModalUpdate } from "../UI/updateModalComponent";
 import { SearchComponent } from "../UI/searchComponent";
 import { FilterStatusComponent } from "../UI/filterStatusComponent";
+import { PaginationControlled } from "../UI/paginationComponent";
 export function TodolistTemplate() {
+    const [page, setPage] = useState(1);
+    const [count, setCount] = useState(3);
     const [tasks, setTasks] = useState([]);
     const [search, setSearch] = useState("");
     const [filtered, setFiltered] = useState("All");
@@ -40,19 +46,20 @@ export function TodolistTemplate() {
                 if (filtered === "All") fetchAllTasks();
                 else if (filtered === "Completed") fetchCompletedTasks();
                 else if (filtered === "Uncompleted") fetchUncompletedTasks();
+            } else {
+                console.log("Masuk sini");
+                if (filtered === "All") fetchAllTaskBySearch("All");
+                else if (filtered === "Completed") fetchAllTaskBySearch("Completed");
+                else if (filtered === "Uncompleted") fetchAllTaskBySearch("Uncompleted");
             }
+        } catch (error) {
+            console.log(error);
         } finally {
-            if (search !== "") {
-                const filteredData = tasks.filter((item) =>
-                    item.task.toLowerCase().includes(search.toLowerCase())
-                );
-                console.log(search, filteredData);
-                setTasks(filteredData);
-            }
+            console.log("Tasks : " + tasks);
             setIsLoading(false);
         }
         setRefresh(0);
-    }, [filtered, refresh, isLoading, search]);
+    }, [filtered, refresh, isLoading, search, page]);
 
     useEffect(() => {
         if (task !== "" && note !== "") {
@@ -69,6 +76,8 @@ export function TodolistTemplate() {
                 setNote("");
                 setModalUpdateOpen(false);
 
+            } catch (error) {
+                console.log(error);
             } finally {
                 setIsLoading(false);
                 setRefresh(1);
@@ -83,6 +92,20 @@ export function TodolistTemplate() {
             console.log("masuk sini");
             const submit = await CreateTodolist(data);
             console.log(submit);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    const fetchAllTaskBySearch = async (status) => {
+        try {
+            setIsLoading(true);
+            const data = await SearchTodolist({ status: status, task: search });
+            setTasks(data);
+        } catch (error) {
+            console.log(error);
         } finally {
             setIsLoading(false);
         }
@@ -91,8 +114,11 @@ export function TodolistTemplate() {
     const fetchAllTasks = async () => {
         try {
             setIsLoading(true);
-            const data = await GetAll();
+            const data = await GetAll(page);
             setTasks(data);
+            getCountTask("All");
+        } catch (error) {
+            console.log(error);
         } finally {
             setIsLoading(false);
         }
@@ -101,8 +127,11 @@ export function TodolistTemplate() {
     const fetchCompletedTasks = async () => {
         try {
             setIsLoading(true);
-            const data = await FilterStatusTodolist({ status: "Completed" });
+            const data = await FilterStatusTodolist("Completed", page);
             setTasks(data);
+            getCountTask("Completed");
+        } catch (error) {
+            console.log(error);
         } finally {
             setIsLoading(false);
         }
@@ -111,8 +140,11 @@ export function TodolistTemplate() {
     const fetchUncompletedTasks = async () => {
         try {
             setIsLoading(true);
-            const data = await FilterStatusTodolist({ status: "Uncompleted" });
+            const data = await FilterStatusTodolist("Uncompleted", page);
             setTasks(data);
+            getCountTask("Uncompleted");
+        } catch (error) {
+            console.log(error);
         } finally {
             setIsLoading(false);
         }
@@ -125,6 +157,8 @@ export function TodolistTemplate() {
             setModalUpdateOpen(true)
             setSelectedTaskId(id);
             setSelectedTaskData(data);
+        } catch (error) {
+            console.log(error);
         } finally {
             setIsLoading(false);
         }
@@ -136,6 +170,8 @@ export function TodolistTemplate() {
             let updateStatus = "";
             item.status === "Uncompleted" ? updateStatus = "Completed" : updateStatus = "Uncompleted";
             updateStatusTask(item, updateStatus);
+        } catch (error) {
+            console.log(error);
         } finally {
             setIsLoading(false);
         }
@@ -147,6 +183,8 @@ export function TodolistTemplate() {
             const submit = await UpdateTodolist({ id: item.id, status: updateStatus, task: item.task, note: item.note });
             console.log(submit);
             setRefresh(1);
+        } catch (error) {
+            console.log(error);
         } finally {
             setIsLoading(false);
         }
@@ -156,13 +194,36 @@ export function TodolistTemplate() {
     const deleteTask = async (id) => {
         try {
             setIsLoading(true);
-            console.log("Masuk sini!");
             const submit = await DeleteTodolistById(id);
             console.log(submit);
-            
+        } catch (error) {
+            console.log(error);
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const getCountTask = async (status) => {
+        try {
+            setIsLoading(true);
+            let counts = 0;
+            if (status === "All") {
+                counts = await GetCountTodolist();
+            } else {
+                counts = await GetCountByStatus(status);
+            }
+            counts = counts / 4;
+            if (counts % 1 !== 0) {
+                setCount(Math.floor(counts) + 1);
+            } else {
+                setCount(counts);
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoading(false);
+        }
+
     };
 
     return (
@@ -214,6 +275,14 @@ export function TodolistTemplate() {
                     ))}
                 </>
             )}
+            <div className="flex justify-center mt-5">
+                <PaginationControlled
+                    page={page}
+                    count={count}
+                    onDismiss={(page) => { setPage(page) }}
+                />
+            </div>
+
 
             {modalUpdateOpen && (
                 <ModalUpdate
