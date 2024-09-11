@@ -134,6 +134,20 @@ export const GetCountTodolist = async () => {
     }
 };
 
+export const LoginUser = async (data) => {
+    try {
+        const response = await useAxios.post("/login", data, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+
 
 
 

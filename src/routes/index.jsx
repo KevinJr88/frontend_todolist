@@ -1,5 +1,7 @@
 // import LayoutUser from "../layouts/user-layout";
 import { Todolist  } from "../pages/to-do-list";
+import { Login } from "../pages/login.jsx";
+import { Register } from "../pages/register.jsx";
 
 
 // import { Alamat } from "../pages/alamat/alamat";
@@ -20,6 +22,14 @@ const routes = [
     {
         path: "/",
         element: <Todolist/>,
+    },
+    {
+        path: "/login",
+        element: <Login/>,
+    },
+    {
+        path: "/register",
+        element: <Register/>,
     },
 
 ];
