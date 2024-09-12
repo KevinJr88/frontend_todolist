@@ -8,7 +8,8 @@ import {
     CreateTodolist,
     SearchTodolist,
     GetCountByStatus,
-    GetCountTodolist
+    GetCountTodolist,
+    SearchAllTodolist
 } from "../../api/TodolistApi";
 
 import {
@@ -102,8 +103,14 @@ export function TodolistTemplate() {
     const fetchAllTaskBySearch = async (status) => {
         try {
             setIsLoading(true);
-            const data = await SearchTodolist({ status: status, task: search });
-            setTasks(data);
+            let datas = {};
+            if(status == "All"){
+                datas = await SearchAllTodolist({task: search });
+                
+            }else{
+                datas = await SearchTodolist({ status: status, task: search });
+            }
+            setTasks(datas);
         } catch (error) {
             console.log(error);
         } finally {
@@ -140,6 +147,7 @@ export function TodolistTemplate() {
     const fetchUncompletedTasks = async () => {
         try {
             setIsLoading(true);
+            console.log("Page" + page);
             const data = await FilterStatusTodolist("Uncompleted", page);
             setTasks(data);
             getCountTask("Uncompleted");

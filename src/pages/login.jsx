@@ -8,6 +8,7 @@ import {
 export function Login() {
     const [username, setIsUsername] = useState("");
     const [password, setIsPassword] = useState("");
+    const [isError, setIsError] = useState("")
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -19,14 +20,18 @@ export function Login() {
             console.log(username);
             console.log(password);
             const submit = await LoginUser({ username: username, password: password });
-            console.log(submit);
+            console.log(username, password)
             if (submit.token != null) {
-                window.location.href = "/";
                 console.log(submit.token);
+                localStorage.setItem('token', submit.token);
+                console.log("Local : " + localStorage.getItem('token'));
+                window.location.href = "/";
+            }else{
+                setIsError("Email or Password Invalid!");
             }
         } catch (error) {
-            console.log(error);
-        }
+            console.error();
+        } 
     };
 
     
@@ -35,6 +40,7 @@ export function Login() {
         <div className="min-h-screen flex items-center justify-center w-full dark:bg-gray-950">
             <div className="bg-white dark:bg-gray-900 shadow-md rounded-lg px-8 py-6 max-w-md">
                 <h1 className="text-2xl font-bold text-center mb-4 dark:text-gray-200">Welcome Back!</h1>
+                {isError && <p className="text-red-500 text-center mb-4">{isError}</p>}
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -49,6 +55,7 @@ export function Login() {
                             onChange={(e) => setIsUsername(e.target.value)}
                             autoComplete="email"
                         />
+                        
                     </div>
                     <div className="mb-4">
                         <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
