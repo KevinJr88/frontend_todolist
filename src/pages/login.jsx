@@ -4,38 +4,33 @@ import {
 } from "../api/TodolistApi.jsx";
 
 
-
 export function Login() {
     const [username, setIsUsername] = useState("");
     const [password, setIsPassword] = useState("");
-    const [isError, setIsError] = useState("")
+    const [isError, setIsError] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
         postLogin(username, password);
     };
 
+
     const postLogin = async (username, password) => {
         try {
-            console.log(username);
-            console.log(password);
-            const submit = await LoginUser({ username: username, password: password });
-            console.log(username, password)
+            const submit = await LoginUser({ username, password });
             if (submit.token != null) {
-                console.log(submit.token);
                 localStorage.setItem('token', submit.token);
-                console.log("Local : " + localStorage.getItem('token'));
+                localStorage.setItem('isAuthenticated', true);
                 window.location.href = "/";
-            }else{
+                console.log("Sampai sini")
+            } else {
                 setIsError("Email or Password Invalid!");
             }
         } catch (error) {
-            console.error();
-        } 
+            console.error(error);
+        }
     };
-
     
-
     return (
         <div className="min-h-screen flex items-center justify-center w-full dark:bg-gray-950">
             <div className="bg-white dark:bg-gray-900 shadow-md rounded-lg px-8 py-6 max-w-md">

@@ -17,6 +17,9 @@ import {
     Checkbox,
 } from "@material-tailwind/react";
 
+
+import { LogoutFloatingButton } from "../UI/logoutFloatingButtonComponent";
+
 import { ModalCreate } from "../UI/createModalComponent";
 import { ModalUpdate } from "../UI/updateModalComponent";
 import { SearchComponent } from "../UI/searchComponent";
@@ -303,6 +306,8 @@ export function TodolistTemplate() {
                     }}
                 />
             )}
+            
+            
             <ModalCreate
                 onDissmiss={(data) => {
                     console.log(data);
@@ -310,6 +315,7 @@ export function TodolistTemplate() {
                 }
                 }
             />
+            <LogoutFloatingButton />
         </>
     );
 }
