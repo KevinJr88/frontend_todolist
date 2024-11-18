@@ -15,7 +15,7 @@ export function LogoutFloatingButton() {
     const handleOpen = () => setOpen(!open);
     const handleConfirm = () => {
         window.localStorage.removeItem("isAuthenticated");
-        window.location.href = "/login";
+        window.location.href = "/frontend_todolist/#/login";
     };
 
     return (
