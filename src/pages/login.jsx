@@ -21,6 +21,7 @@ export function Login() {
             if (submit.token != null) {
                 localStorage.setItem('token', submit.token);
                 localStorage.setItem('isAuthenticated', true);
+                localStorage.setItem('username', submit.email);
                 window.location.href = "/";
                 console.log("Sampai sini")
             } else {
