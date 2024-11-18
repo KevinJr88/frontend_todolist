@@ -6,12 +6,13 @@ export const GetAll = async (offset) => {
         const response = await useAxios.get(`/todolist/${offset-1}/4`, {
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
             },
         });
-        console.log(response.data.response.content);
-        return response.data.response.content;
+        console.log(response.data);
+        return response.data;
     } catch (error) {
-        throw error.response.data.data;
+        throw error.response.data;
     }
 };
 
@@ -22,10 +23,11 @@ export const GetTodolistById = async (id) => {
         const response = await useAxios.get(`/todolist/${id}`, {
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
             },
         });
         console.log(response.data.data);
-        return response.data.data;
+        return response.data;
     } catch (error) {
         throw error.response.data;
     }
@@ -37,9 +39,10 @@ export const CreateTodolist = async (data) => {
         const response = await useAxios.post("/todolist", data, {
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
             },
         });
-        return response.data.data;
+        return response.data;
     } catch (error) {
         throw error.response.data;
     }
@@ -51,9 +54,10 @@ export const UpdateTodolist = async (data) => {
         const response = await useAxios.put(`/todolist/${data.id}`, data, {
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
             },
         });
-        return response.data.data;
+        return response.data;
     } catch (error) {
         throw error.response.data;
     }
@@ -66,9 +70,10 @@ export const DeleteTodolistById = async (id) => {
         const response = await useAxios.delete(`/todolist/${id}`, {
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
             },
         });
-        return response.data.data;
+        return response.data;
     } catch (error) {
         throw error.response.data;
     }
@@ -80,10 +85,26 @@ export const SearchTodolist = async (data) => {
         const response = await useAxios.post("/todolist/search", data, {
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
+        });
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+
+export const SearchAllTodolist = async (data) => {
+    try {
+        const response = await useAxios.post("/todolist/search/all", data, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
             },
         });
         console.log(response.data.data);
-        return response.data.data;
+        return response.data;
     } catch (error) {
         throw error.response.data;
     }
@@ -97,12 +118,13 @@ export const FilterStatusTodolist = async (status, offset) => {
         const response = await useAxios.get(`/todolist/${status}/${offset-1}/4`, {
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
             },
         });
-        console.log(response.data.response.content);
-        return response.data.response.content;
+        console.log(response.data);
+        return response.data;
     } catch (error) {
-        throw error.response.data.response.content;
+        throw error.response.data;
     }
 };
 
@@ -111,10 +133,11 @@ export const GetCountByStatus = async (status) => {
         const response = await useAxios.get(`/todolist/count/${status}`, {
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
             },
         });
         console.log(response.data.data);
-        return response.data.data;
+        return response.data;
     } catch (error) {
         throw error.response.data.data;
     }
@@ -125,16 +148,43 @@ export const GetCountTodolist = async () => {
         const response = await useAxios.get(`/todolist/count`, {
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
             },
         });
         console.log(response.data.data);
-        return response.data.data;
+        return response.data;
     } catch (error) {
         throw error.response.data.data;
     }
 };
 
+export const RegisterUser = async (data) => {
+    try {
+        const response = await useAxios.post("/signup", data, {
+            headers: {
+                "Content-Type": "application/json",
+                
+            },
+        });
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
 
-
+export const LoginUser = async (data) => {
+    try {
+        const response = await useAxios.post("/login", data, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
 
 

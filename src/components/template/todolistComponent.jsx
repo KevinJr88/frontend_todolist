@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import {
     GetAll,
     FilterStatusTodolist,
@@ -8,13 +8,17 @@ import {
     CreateTodolist,
     SearchTodolist,
     GetCountByStatus,
-    GetCountTodolist
+    GetCountTodolist,
+    SearchAllTodolist
 } from "../../api/TodolistApi";
 
 import {
     Typography,
     Checkbox,
 } from "@material-tailwind/react";
+
+
+import { LogoutFloatingButton } from "../UI/logoutFloatingButtonComponent";
 
 import { ModalCreate } from "../UI/createModalComponent";
 import { ModalUpdate } from "../UI/updateModalComponent";
@@ -102,8 +106,14 @@ export function TodolistTemplate() {
     const fetchAllTaskBySearch = async (status) => {
         try {
             setIsLoading(true);
-            const data = await SearchTodolist({ status: status, task: search });
-            setTasks(data);
+            let datas = {};
+            if(status == "All"){
+                datas = await SearchAllTodolist({task: search });
+                
+            }else{
+                datas = await SearchTodolist({ status: status, task: search });
+            }
+            setTasks(datas);
         } catch (error) {
             console.log(error);
         } finally {
@@ -140,6 +150,7 @@ export function TodolistTemplate() {
     const fetchUncompletedTasks = async () => {
         try {
             setIsLoading(true);
+            console.log("Page" + page);
             const data = await FilterStatusTodolist("Uncompleted", page);
             setTasks(data);
             getCountTask("Uncompleted");
@@ -295,6 +306,8 @@ export function TodolistTemplate() {
                     }}
                 />
             )}
+            
+            
             <ModalCreate
                 onDissmiss={(data) => {
                     console.log(data);
@@ -302,6 +315,7 @@ export function TodolistTemplate() {
                 }
                 }
             />
+            <LogoutFloatingButton />
         </>
     );
 }

@@ -6,6 +6,7 @@ import {
 import { TodolistTemplate } from "../components/template/todolistComponent";
 
 export function Todolist() {
+
     return (
         <div className="flex justify-center">
             <div className="w-[90vw] md:w-[60vw] p-8">

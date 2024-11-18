@@ -1,6 +1,6 @@
 {
-  "name": "responsi-atmakitchen",
-  "private": true,
+  "name": "todolist_intern",
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "homepage": "https://KevinJr88.github.io/frontend_todolist",
