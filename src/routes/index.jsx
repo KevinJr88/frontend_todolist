@@ -1,4 +1,3 @@
-import React from 'react';
 import { Todolist } from "../pages/to-do-list";
 import { Login } from "../pages/login.jsx";
 import { Register } from "../pages/register.jsx";
