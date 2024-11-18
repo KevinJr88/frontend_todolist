@@ -2,7 +2,7 @@ import { Todolist } from "../pages/to-do-list";
 import { Login } from "../pages/login.jsx";
 import { Register } from "../pages/register.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
+import ProtectedRoute from '../routes/ProtectedRoute.jsx';
 
 
 const routes = [
@@ -11,17 +11,19 @@ const routes = [
         element: <div>Routes Not Found!</div>,
     },
     {
-        path: "/",
+        path: "/frontend_todolist",
         element: (
-            <Todolist />
+            <ProtectedRoute>
+                <Todolist />
+            </ProtectedRoute>
         ),
     },
     {
-        path: "/login",
+        path: "/frontend_todolist/login",
         element: <Login />,
     },
     {
-        path: "/register",
+        path: "/frontend_todolist/register",
         element: <Register />,
     },
 ];
