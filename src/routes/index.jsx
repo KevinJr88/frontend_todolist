@@ -1,4 +1,3 @@
-import React from 'react';
 import { Todolist } from "../pages/to-do-list";
 import { Login } from "../pages/login.jsx";
 import { Register } from "../pages/register.jsx";
@@ -12,7 +11,7 @@ const routes = [
         element: <div>Routes Not Found!</div>,
     },
     {
-        path: "/",
+        path: "/frontend_todolist",
         element: (
             <ProtectedRoute>
                 <Todolist />
@@ -20,11 +19,11 @@ const routes = [
         ),
     },
     {
-        path: "/login",
+        path: "/frontend_todolist/login",
         element: <Login />,
     },
     {
-        path: "/register",
+        path: "/frontend_todolist/register",
         element: <Register />,
     },
 ];

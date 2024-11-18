@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 
+// eslint-disable-next-line react/prop-types
 const ProtectedRoute = ({ children }) => {
     if (!localStorage.getItem("isAuthenticated")) {
-        return <Navigate to="/login" />;
+        return <Navigate to="/frontend_todolist/login" />;
     }
 
     return children;
