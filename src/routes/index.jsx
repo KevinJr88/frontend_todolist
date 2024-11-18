@@ -3,7 +3,7 @@ import { Todolist } from "../pages/to-do-list";
 import { Login } from "../pages/login.jsx";
 import { Register } from "../pages/register.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ProtectedRoute from '../routes/ProtectedRoute.jsx';
+
 
 
 const routes = [
@@ -14,9 +14,7 @@ const routes = [
     {
         path: "/",
         element: (
-            <ProtectedRoute>
-                <Todolist />
-            </ProtectedRoute>
+            <Todolist />
         ),
     },
     {
