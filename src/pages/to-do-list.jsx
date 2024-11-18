@@ -16,5 +16,3 @@ export function Todolist() {
         </div>
     );
 }
-
-export default Todolist;

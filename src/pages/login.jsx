@@ -21,6 +21,7 @@ export function Login() {
             if (submit.token != null) {
                 localStorage.setItem('token', submit.token);
                 localStorage.setItem('isAuthenticated', true);
+                localStorage.setItem('username', submit.email);
                 window.location.href = "/";
                 console.log("Sampai sini")
             } else {
@@ -80,7 +81,7 @@ export function Login() {
                                 Remember me
                             </label>
                         </div>
-                        <a href="/register" className="text-xs text-indigo-500 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <a href="/frontend_todolist/register" className="text-xs text-indigo-500 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                             Create Account
                         </a>
                     </div>

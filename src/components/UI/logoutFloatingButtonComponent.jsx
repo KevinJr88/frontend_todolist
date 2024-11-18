@@ -3,7 +3,6 @@ import { CgLogOut } from "react-icons/cg";
 
 import {
     Dialog,
-    DialogHeader,
     DialogBody,
     DialogFooter,
     Button
